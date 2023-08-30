@@ -15,7 +15,13 @@ To achieve this, the project follows these key steps:
 1. Data Collection: I gathered a dummy user engagement data from the corporate social network's database. This includes data related to **user activity**, **event activity** (such as login events, messaging events, search events, events logged as users progress through a signup funnel, events around received emails) and **email activity**.
 2. Data Preparation: I cleaned and preprocessed the collected data to ensure accuracy and consistency. This step involves handling missing values, transforming data formats, and structuring it for efficient analysis.
 3. SQL Analysis: Utilize SQL queries to explore the dataset. Calculate engagement metrics over time, such as daily active users, average posts per user, and comments per post. Compare these metrics before and after the drop in engagement to identify trends.
-4. Segmentation: I segmented users based on user types (new users vs. old users), device types (desktop, tablet, and mobile), and geographic regions. Analyze engagement patterns within different segments to identify if specific groups are more affected by the engagement drop.
+4. Identify Patterns and Trends: I utilized SQL queries to examine the user engagement metrics, such as active users, session duration, interactions, and conversion rates, over the designated time period.
+![carbon (1)](https://github.com/VictorOluniyi/Investigating-a-Drop-in-User-Engagement/assets/115374063/97c0a02a-b6d6-400c-8123-0d1a77d4bfb0)
+![first](https://github.com/VictorOluniyi/Investigating-a-Drop-in-User-Engagement/assets/115374063/808e2b3e-4543-4304-aed3-741678382eb0)
+6. Segmentation Analysis: I segmented users based on user types (new users vs. old users), device types (desktop, tablet, and mobile), and geographic regions. Analyze engagement patterns within different segments to identify if specific groups are more affected by the engagement drop.
+![carbon (2)](https://github.com/VictorOluniyi/Investigating-a-Drop-in-User-Engagement/assets/115374063/d204ebd5-789f-4046-ac0e-7ab6cb895768)
+![Segmentation](https://github.com/VictorOluniyi/Investigating-a-Drop-in-User-Engagement/assets/115374063/f9ad48c4-5179-476d-8585-d8903e0e7dec)
+
 
 -- 1. Total engagement per user
 SELECT user_id,
