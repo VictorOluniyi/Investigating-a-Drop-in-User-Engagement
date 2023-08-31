@@ -5,23 +5,29 @@ In this case study, a Corporate Social Network notices a sudden drop in user eng
 
 ## Project Objectives
 1. Identify Patterns and Trends: Utilize SQL queries to examine the user engagement metrics, such as active users, session duration, interactions, and conversion rates, over the designated time period.
-
 2. Segmentation Analysis: Divide the user base into relevant segments based on demographics, behavior, or any other pertinent criteria. This segmentation will help identify if the drop in engagement is uniform across all user groups or specific to certain segments.
-
 3. Time Series Analysis: Employ time-based SQL queries to assess if the decline in engagement is part of a seasonal pattern or triggered by a specific event.
 
-## 
+## Approach
 To achieve this, the project follows these key steps:
-1. Data Collection: I gathered a dummy user engagement data from the corporate social network's database. This includes data related to **user activity**, **event activity** (such as login events, messaging events, search events, events logged as users progress through a signup funnel, events around received emails) and **email activity**.
+1. Data Collection: I gathered dummy user engagement data from the corporate social network's database. This includes data related to **user activity**, **event activity** (such as login events, messaging events, search events, events logged as users progress through a signup funnel, events around received emails) and **email activity**.
 2. Data Preparation: I cleaned and preprocessed the collected data to ensure accuracy and consistency. This step involves handling missing values, transforming data formats, and structuring it for efficient analysis.
 3. SQL Analysis: Utilize SQL queries to explore the dataset. Calculate engagement metrics over time, such as daily active users, average posts per user, and comments per post. Compare these metrics before and after the drop in engagement to identify trends.
-4. Identify Patterns and Trends: I utilized SQL queries to examine the user engagement metrics, such as active users, session duration, interactions, and conversion rates, over the designated time period.
-![carbon (1)](https://github.com/VictorOluniyi/Investigating-a-Drop-in-User-Engagement/assets/115374063/97c0a02a-b6d6-400c-8123-0d1a77d4bfb0)
+   #### i. Identify Patterns and Trends: I utilized SQL queries to examine the user engagement metrics, such as active users, session duration, interactions, and conversion rates, over the designated time period.
+![carbon (1)](https://github.com/VictorOluniyi/Investigating-a-Drop-in-User-Engagement/assets/115374063/e9b79377-d8e3-4f2c-8f25-a21be6671fa1)
 ![first](https://github.com/VictorOluniyi/Investigating-a-Drop-in-User-Engagement/assets/115374063/808e2b3e-4543-4304-aed3-741678382eb0)
-6. Segmentation Analysis: I segmented users based on user types (new users vs. old users), device types (desktop, tablet, and mobile), and geographic regions. Analyze engagement patterns within different segments to identify if specific groups are more affected by the engagement drop.
-![carbon (2)](https://github.com/VictorOluniyi/Investigating-a-Drop-in-User-Engagement/assets/115374063/d204ebd5-789f-4046-ac0e-7ab6cb895768)
+  #### ii. Segmentation Analysis: I segmented users based on user types (new users vs. old users), device types (desktop, tablet, and mobile), and geographic regions. Analyze engagement patterns within different segments to identify if specific groups are more affected by the engagement drop.
+![carbon](https://github.com/VictorOluniyi/Investigating-a-Drop-in-User-Engagement/assets/115374063/5d97c43e-27ef-4925-89ae-5d72f843ba65)
 ![Segmentation](https://github.com/VictorOluniyi/Investigating-a-Drop-in-User-Engagement/assets/115374063/f9ad48c4-5179-476d-8585-d8903e0e7dec)
+  #### iii. Product Comparison: I compared the products that experienced a decline in engagement with those that remained consistent or improved. This will aid in pinpointing which particular product might be causing the drop. there was a pretty steep drop in phone engagement rates. So it's likely that there's a problem with the mobile app related to long-time user retention.
+![carbon (2)](https://github.com/VictorOluniyi/Investigating-a-Drop-in-User-Engagement/assets/115374063/609446cc-55c3-43b7-8c85-c80dd53c1888)
+![ENGAGEMENT](https://github.com/VictorOluniyi/Investigating-a-Drop-in-User-Engagement/assets/115374063/c2cb2406-f4e3-423d-8bae-1a635af90d0f)
+  #### iv. Email Engagement Analysis: I examined various metrics and data related to email interactions, such as open rates, click-through rates, conversion rates, unsubscribe rates, and more to gain insights into user behavior, preferences, and trends, helping them identify the causes behind a drop in engagement and take appropriate actions to improve it. The analysis shows the email clickthroughs are way down, indicating clearly that the problem has to do with digest emails in addition to mobile apps.
+![Victor](https://github.com/VictorOluniyi/Investigating-a-Drop-in-User-Engagement/assets/115374063/29fd2b86-8d4a-48bd-8796-b1682d45d61d)
+![email](https://github.com/VictorOluniyi/Investigating-a-Drop-in-User-Engagement/assets/115374063/c0a367f6-7815-4ea7-bb3b-89a50632aad0)
 
+## Conclusion:
+The investigation, powered by SQL analysis, provided a comprehensive understanding of the user engagement drop. By identifying critical issues, the project empowered the company to make data-backed decisions and implement targeted solutions. This case study demonstrates the value of data-driven insights in diagnosing and remedying challenges within digital platforms.
 
 -- 1. Total engagement per user
 SELECT user_id,
@@ -38,122 +44,3 @@ FROM tutorial.yammer_events
 WHERE event_type = 'engagement'
 GROUP BY date
 ORDER BY date DESC;
-
--- 3. Calculate the Growth pattern within 3 months (user's activation) Daily Signups
-SELECT DATE_TRUNC('day',created_at) AS day,
-       COUNT(*) AS all_users,
-       COUNT(CASE 
-                  WHEN activated_at IS NOT NULL THEN user_id 
-                  ELSE NULL 
-                  END) AS activated_users
-  FROM tutorial.yammer_users 
- WHERE created_at >= '2014-06-01'
-   AND created_at < '2014-09-01'
- GROUP BY 1
- ORDER BY 1
-
--- 4. Cohort analysis (cohort users based on when they signed up for the product) Engagement by User Age Cohort
-SELECT DATE_TRUNC('week',z.occurred_at) AS "week",
-       AVG(z.age_at_event) AS "Average age during week",
-       COUNT(DISTINCT CASE WHEN z.user_age > 70 THEN z.user_id ELSE NULL END) AS "10+ weeks",
-       COUNT(DISTINCT CASE WHEN z.user_age < 70 AND z.user_age >= 63 THEN z.user_id ELSE NULL END) AS "9 weeks",
-       COUNT(DISTINCT CASE WHEN z.user_age < 63 AND z.user_age >= 56 THEN z.user_id ELSE NULL END) AS "8 weeks",
-       COUNT(DISTINCT CASE WHEN z.user_age < 56 AND z.user_age >= 49 THEN z.user_id ELSE NULL END) AS "7 weeks",
-       COUNT(DISTINCT CASE WHEN z.user_age < 49 AND z.user_age >= 42 THEN z.user_id ELSE NULL END) AS "6 weeks",
-       COUNT(DISTINCT CASE WHEN z.user_age < 42 AND z.user_age >= 35 THEN z.user_id ELSE NULL END) AS "5 weeks",
-       COUNT(DISTINCT CASE WHEN z.user_age < 35 AND z.user_age >= 28 THEN z.user_id ELSE NULL END) AS "4 weeks",
-       COUNT(DISTINCT CASE WHEN z.user_age < 28 AND z.user_age >= 21 THEN z.user_id ELSE NULL END) AS "3 weeks",
-       COUNT(DISTINCT CASE WHEN z.user_age < 21 AND z.user_age >= 14 THEN z.user_id ELSE NULL END) AS "2 weeks",
-       COUNT(DISTINCT CASE WHEN z.user_age < 14 AND z.user_age >= 7 THEN z.user_id ELSE NULL END) AS "1 week",
-       COUNT(DISTINCT CASE WHEN z.user_age < 7 THEN z.user_id ELSE NULL END) AS "Less than a week"
-  FROM (
-        SELECT e.occurred_at,
-               u.user_id,
-               DATE_TRUNC('week',u.activated_at) AS activation_week,
-               EXTRACT('day' FROM e.occurred_at - u.activated_at) AS age_at_event,
-               EXTRACT('day' FROM '2014-09-01'::TIMESTAMP - u.activated_at) AS user_age
-          FROM tutorial.yammer_users u
-          JOIN tutorial.yammer_events e
-            ON e.user_id = u.user_id
-           AND e.event_type = 'engagement'
-           AND e.event_name = 'login'
-           AND e.occurred_at >= '2014-05-01'
-           AND e.occurred_at < '2014-09-01'
-         WHERE u.activated_at IS NOT NULL
-       ) z
-
- GROUP BY 1
- ORDER BY 1
-LIMIT 100
-
--- 5. Product Analysis (Weekly Engagement by Device Category)
-SELECT DATE_TRUNC('week', occurred_at) AS week,
-      COUNT(DISTINCT e.user_id) AS weekly_active_users,
-      COUNT(DISTINCT CASE 
-                        WHEN e.device IN ('macbook pro','lenovo thinkpad','macbook air','dell inspiron notebook',
-                        'asus chromebook','dell inspiron desktop','acer aspire notebook','hp pavilion desktop','acer aspire desktop','mac mini')
-                        THEN e.user_id 
-                        ELSE NULL 
-                        END) AS computer,
-      COUNT(DISTINCT CASE 
-                        WHEN e.device IN ('iphone 5','samsung galaxy s4','nexus 5','iphone 5s','iphone 4s','nokia lumia 635',
-                        'htc one','samsung galaxy note','amazon fire phone') 
-                        THEN e.user_id 
-                        ELSE NULL 
-                        END) AS phone,
-      COUNT(DISTINCT CASE 
-                        WHEN e.device IN ('ipad air','nexus 7','ipad mini','nexus 10','kindle fire','windows surface',
-                        'samsumg galaxy tablet') 
-                        THEN e.user_id 
-                        ELSE NULL 
-                        END) AS tablet
-FROM tutorial.yammer_events e
-WHERE e.event_type = 'engagement'
-   AND e.event_name = 'login'
-GROUP BY 1
-ORDER BY 1
-LIMIT 100;
-
-SELECT DISTINCT action FROM tutorial.yammer_emails 
-
--- 6. Email Account
-SELECT DATE_TRUNC('week', occurred_at) AS week,
-       COUNT(CASE WHEN e.action = 'sent_weekly_digest' THEN e.user_id ELSE NULL END) AS weekly_emails,
-       COUNT(CASE WHEN e.action = 'sent_reengagement_email' THEN e.user_id ELSE NULL END) AS reengagement_emails,
-       COUNT(CASE WHEN e.action = 'email_open' THEN e.user_id ELSE NULL END) AS email_opens,
-       COUNT(CASE WHEN e.action = 'email_clickthrough' THEN e.user_id ELSE NULL END) AS email_clickthroughs
-  FROM tutorial.yammer_emails e
- GROUP BY 1
- ORDER BY 1
- 
--- 7. Open and CT Rates Analysis
-SELECT week,
-       weekly_opens/CASE WHEN weekly_emails = 0 THEN 1 ELSE weekly_emails END::FLOAT AS weekly_open_rate,
-       weekly_ctr/CASE WHEN weekly_opens = 0 THEN 1 ELSE weekly_opens END::FLOAT AS weekly_ctr,
-       retain_opens/CASE WHEN retain_emails = 0 THEN 1 ELSE retain_emails END::FLOAT AS retain_open_rate,
-       retain_ctr/CASE WHEN retain_opens = 0 THEN 1 ELSE retain_opens END::FLOAT AS retain_ctr
-  FROM (
-SELECT DATE_TRUNC('week',e1.occurred_at) AS week,
-       COUNT(CASE WHEN e1.action = 'sent_weekly_digest' THEN e1.user_id ELSE NULL END) AS weekly_emails,
-       COUNT(CASE WHEN e1.action = 'sent_weekly_digest' THEN e2.user_id ELSE NULL END) AS weekly_opens,
-       COUNT(CASE WHEN e1.action = 'sent_weekly_digest' THEN e3.user_id ELSE NULL END) AS weekly_ctr,
-       COUNT(CASE WHEN e1.action = 'sent_reengagement_email' THEN e1.user_id ELSE NULL END) AS retain_emails,
-       COUNT(CASE WHEN e1.action = 'sent_reengagement_email' THEN e2.user_id ELSE NULL END) AS retain_opens,
-       COUNT(CASE WHEN e1.action = 'sent_reengagement_email' THEN e3.user_id ELSE NULL END) AS retain_ctr
-  FROM tutorial.yammer_emails e1
-  LEFT JOIN tutorial.yammer_emails e2
-    ON e2.occurred_at >= e1.occurred_at
-   AND e2.occurred_at < e1.occurred_at + INTERVAL '5 MINUTE'
-   AND e2.user_id = e1.user_id
-   AND e2.action = 'email_open'
-  LEFT JOIN tutorial.yammer_emails e3
-    ON e3.occurred_at >= e2.occurred_at
-   AND e3.occurred_at < e2.occurred_at + INTERVAL '5 MINUTE'
-   AND e3.user_id = e2.user_id
-   AND e3.action = 'email_clickthrough'
- WHERE e1.occurred_at >= '2014-06-01'
-   AND e1.occurred_at < '2014-09-01'
-   AND e1.action IN ('sent_weekly_digest','sent_reengagement_email')
- GROUP BY 1
-       ) a
- ORDER BY 1
