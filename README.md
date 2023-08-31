@@ -26,6 +26,13 @@ To achieve this, the project follows these key steps:
 ![Victor](https://github.com/VictorOluniyi/Investigating-a-Drop-in-User-Engagement/assets/115374063/29fd2b86-8d4a-48bd-8796-b1682d45d61d)
 ![email](https://github.com/VictorOluniyi/Investigating-a-Drop-in-User-Engagement/assets/115374063/c0a367f6-7815-4ea7-bb3b-89a50632aad0)
 
+Recommendation:
+After investigation, it appears that the problem has to do with mobile use and digest emails. The intended action here should be clear:
+1. Notify the Head of Product: Communicate the findings and conclusions to the head of product, who initially approached you with the problem. Highlight the specific areas of concern, which are mobile use and digest emails. Emphasize the importance of addressing these issues to improve user engagement.
+2. Technical Assessment: Collaborate with the technical team to conduct a thorough assessment of both the mobile app and the digest email functionality. This assessment should aim to identify any potential technical glitches, broken features, or poor implementation that might be causing the drop in user engagement.
+3. Testing and Quality Assurance: Implement comprehensive testing procedures to ensure that both the mobile app and digest email features are functioning as intended. Test various scenarios and use cases to identify any issues that might have been missed during the initial assessment.
+4. User Feedback: Gather feedback from users who have experienced the drop in engagement. This could be done through surveys, user interviews, or user testing sessions. Understanding their experiences and pain points can provide valuable insights into the root causes of the problem.
+
 ## Conclusion:
 The investigation, powered by SQL analysis, provided a comprehensive understanding of the user engagement drop. By identifying critical issues, the project empowered the company to make data-backed decisions and implement targeted solutions. This case study demonstrates the value of data-driven insights in diagnosing and remedying challenges within digital platforms.
 
